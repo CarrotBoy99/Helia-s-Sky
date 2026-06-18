@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تولدت مبارک هلیا ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#04060f;font-family:'Vazirmatn',sans-serif}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+.scene{position:fixed;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;opacity:0;transition:opacity 1.5s ease ;}
+.scene.active{display:flex}
+#scene1 .main-text{text-align:center;direction:rtl}
+#scene1 .persian-title{font-size:clamp(3rem,8vw,6rem);color:#f5c842;font-weight:700;text-shadow:0 0 40px rgba(245,200,66,0.7),0 0 80px rgba(245,200,66,0.3);opacity:0;animation:fadeInUp 1.5s ease 1s forwards}
+#scene1 .persian-sub{font-size:clamp(0.9rem,2.5vw,1.3rem);color:#c8d8f0;margin-top:1rem;opacity:0;animation:fadeInUp 1.5s ease 1.8s forwards;max-width:500px;line-height:2}
+.glow-btn{margin-top:2.5rem;padding:0.9rem 2.5rem;background:rgba(245,200,66,0.1);border:1.5px solid rgba(245,200,66,0.6);border-radius:50px;color:#f5c842;font-family:'Vazirmatn',sans-serif;font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.4s;backdrop-filter:blur(10px);animation:fadeInUp 1.5s ease 3.5s forwards;-webkit-animation:fadeInUp 1.5s ease 3.5s forwards}
+.glow-btn:hover{background:rgba(245,200,66,0.2);box-shadow:0 0 30px rgba(245,200,66,0.4);transform:scale(1.05)}
+.fog{position:absolute;bottom:0;left:0;width:100%;height:180px;background:linear-gradient(to top,rgba(20,30,70,0.5),transparent);animation:fogDrift 8s ease-in-out infinite alternate;pointer-events:none}
+@keyframes fogDrift{from{transform:translateX(-20px) scaleY(1)}to{transform:translateX(20px) scaleY(1.1)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#scene2{position:relative}
+.star-point{position:absolute;cursor:pointer;width:60px;height:60px;display:flex;align-items:center;justify-content:center;z-index:20}
+.star-point .dot{width:18px;height:18px;border-radius:50%;background:#f5c842;box-shadow:0 0 20px rgba(245,200,66,0.8),0 0 40px rgba(245,200,66,0.4);animation:starPulse 2s ease-in-out infinite;transition:all 0.3s}
+.star-point.visited .dot{background:#f2a1b3;box-shadow:0 0 20px rgba(242,161,179,0.8),0 0 40px rgba(242,161,179,0.4)}
+.star-point .star-label{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);color:rgba(200,216,240,0.3);font-size:0.75rem;white-space:nowrap;transition:color 0.3s;pointer-events:none}
+.star-point:hover .star-label,.star-point.visited .star-label{color:rgba(200,216,240,0.9)}
+@keyframes starPulse{0%,100%{transform:scale(1);box-shadow:0 0 20px rgba(245,200,66,0.8),0 0 40px rgba(245,200,66,0.4)}50%{transform:scale(1.3);box-shadow:0 0 30px rgba(245,200,66,1),0 0 60px rgba(245,200,66,0.6)}}
+.glass-card{background:rgba(8,14,36,0.75);backdrop-filter:blur(20px);border:1px solid rgba(200,220,255,0.15);border-radius:20px;padding:2.5rem;max-width:420px;width:90%;text-align:center;direction:rtl;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;opacity:0;transition:all 0.4s;pointer-events:none;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.glass-card.visible{opacity:1;pointer-events:all}
+.glass-card .card-emoji{font-size:3rem;margin-bottom:1rem}
+.glass-card .card-title{font-size:1.5rem;color:#f5c842;margin-bottom:1rem;font-weight:700}
+.glass-card .card-text{color:#c8d8f0;line-height:2;font-size:1rem}
+.card-close{margin-top:1.5rem;padding:0.6rem 2rem;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.4);border-radius:50px;color:#f5c842;font-family:'Vazirmatn',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.3s}
+.card-close:hover{background:rgba(245,200,66,0.2)}
+#scene3 .letter-card{background:rgba(8,14,36,0.75);backdrop-filter:blur(20px);border:1px solid rgba(200,220,255,0.15);border-radius:20px;padding:2.5rem 3rem;max-width:500px;width:92%;direction:rtl;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+#scene3 .letter-text{color:#c8d8f0;line-height:2.4;font-size:1rem;min-height:200px}
+.cursor{display:inline-block;width:2px;height:1.1em;background:#f5c842;animation:blink 0.8s step-end infinite;vertical-align:text-bottom;margin-right:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+#scene4{text-align:center;position:relative;overflow:hidden}
+#scene4 canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.celebration-text{position:relative;z-index:20;text-align:center;direction:rtl}
+.cel-happy{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,3.5rem);background:linear-gradient(135deg,#f5c842,#fff8dc,#f5c842);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;margin-bottom:0.5rem}
+.cel-name{font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,8rem);background:linear-gradient(135deg,#fff,#f5c842,#f2a1b3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;filter:drop-shadow(0 0 30px rgba(245,200,66,0.5));line-height:1}
+.cel-persian{font-size:clamp(1rem,3vw,1.5rem);color:#c8d8f0;margin-top:0.8rem}
+.cel-welcome{font-size:clamp(0.75rem,2vw,1rem);color:#f5c842;letter-spacing:4px;margin-top:0.8rem;font-family:'Playfair Display',serif}
+.light-rays{position:absolute;top:50%;left:50%;width:200vmax;height:200vmax;transform:translate(-50%,-50%);background:conic-gradient(rgba(245,200,66,0.04) 0deg,transparent 10deg,rgba(245,200,66,0.03) 20deg,transparent 30deg,rgba(245,200,66,0.04) 40deg,transparent 50deg,rgba(245,200,66,0.02) 60deg,transparent 70deg,rgba(245,200,66,0.04) 80deg,transparent 90deg,rgba(242,161,179,0.03) 100deg,transparent 110deg,rgba(245,200,66,0.04) 120deg,transparent 130deg,rgba(245,200,66,0.02) 140deg,transparent 150deg,rgba(245,200,66,0.04) 160deg,transparent 170deg,rgba(242,161,179,0.03) 180deg,transparent 190deg,rgba(245,200,66,0.04) 200deg,transparent 210deg,rgba(245,200,66,0.02) 220deg,transparent 230deg,rgba(245,200,66,0.04) 240deg,transparent 250deg,rgba(242,161,179,0.03) 260deg,transparent 270deg,rgba(245,200,66,0.04) 280deg,transparent 290deg,rgba(245,200,66,0.02) 300deg,transparent 310deg,rgba(245,200,66,0.04) 320deg,transparent 330deg,rgba(242,161,179,0.03) 340deg,transparent 350deg,rgba(245,200,66,0.04) 360deg);animation:raysRotate 20s linear infinite;z-index:1;pointer-events:none}
+@keyframes raysRotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.lanterns-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:50;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.overlay.active{opacity:1;pointer-events:all}
+#nextBtn2{display:none;margin-top:2rem;opacity:0;transition:opacity 0.8s;pointer-events:none;position:relative;z-index:30;-webkit-backdrop-filter:blur(10px);}
+#nextBtn2.visible{opacity:1;pointer-events:all}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<!-- SCENE 1 -->
+<div class="scene active" id="scene1">
+  <div class="fog"></div>
+  <div class="main-text">
+    <div class="persian-title">هلیا...</div>
+    <div class="persian-sub">یه لحظه وایسا... آسمون امشب یه چیزی داره بهت میگه</div>
+    <button class="glow-btn" onclick="goToScene('scene2')">ببین چی میگه ✨</button>
+  </div>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene2" style="flex-direction:column;justify-content:center;align-items:center">
+  <canvas id="particleCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15"></canvas>
+  <div class="star-point" id="star1" style="top:18%;left:15%" onclick="openCard(0)">
+    <div class="dot"></div><div class="star-label">آرامش</div>
+  </div>
+  <div class="star-point" id="star2" style="top:12%;right:20%" onclick="openCard(1)">
+    <div class="dot"></div><div class="star-label">تلاش</div>
+  </div>
+  <div class="star-point" id="star3" style="top:42%;left:8%" onclick="openCard(2)">
+    <div class="dot"></div><div class="star-label">آدم‌های خوب</div>
+  </div>
+  <div class="star-point" id="star4" style="top:55%;right:12%" onclick="openCard(3)">
+    <div class="dot"></div><div class="star-label">آرزوها</div>
+  </div>
+  <div class="star-point" id="star5" style="top:75%;left:25%" onclick="openCard(4)">
+    <div class="dot"></div><div class="star-label">شادی</div>
+  </div>
+  <div class="star-point" id="star6" style="top:70%;right:22%" onclick="openCard(5)">
+    <div class="dot"></div><div class="star-label">تولد</div>
+  </div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(200,216,240,0.3);font-size:clamp(0.85rem,2.5vw,1.1rem);text-align:center;direction:rtl;pointer-events:none;z-index:5">
+    روی ستاره‌ها کلیک کن ✨
+  </div>
+  <button class="glow-btn" id="nextBtn2" onclick="goToScene('scene3')" style="animation:none;margin-top:0">یه چیزی برات نوشتم... 💌</button>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeCard()"></div>
+<div class="glass-card" id="wishCard">
+  <div class="card-emoji" id="cardEmoji"></div>
+  <div class="card-title" id="cardTitle"></div>
+  <div class="card-text" id="cardText"></div>
+  <button class="card-close" onclick="closeCard()">بستن</button>
+</div>
+
+<!-- SCENE 3 -->
+<div class="scene" id="scene3">
+  <div class="letter-card">
+    <div class="letter-text" id="letterText"></div>
+  </div>
+</div>
+
+<!-- SCENE 4 -->
+<div class="scene" id="scene4">
+  <div class="light-rays"></div>
+  <canvas class="lanterns-canvas" id="fireworksCanvas"></canvas>
+  <div class="celebration-text" style="position:relative;z-index:20">
+    <div class="cel-happy">HAPPY BIRTHDAY</div>
+    <div class="cel-name">HELIA</div>
+    <div class="cel-persian">✨ تولدت مبارک هلیا جان ✨</div>
+    <div class="cel-welcome">Welcome to 20 ☽</div>
+  </div>
+</div>
+
+<script>
+// ---- STARRY BG ----
+const bgCanvas = document.getElementById('bg');
+const bgCtx = bgCanvas.getContext('2d');
+let W, H, stars=[], shootingStarTimer=0, shootingStar=null;
+
+function resize(){
+  W=bgCanvas.width=window.innerWidth;
+  H=bgCanvas.height=window.innerHeight;
+  initStars();
+}
+
+function initStars(){
+  stars=[];
+  for(let i=0;i<200;i++){
+    stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.5+0.3,
+      alpha:Math.random(),
+      speed:Math.random()*0.015+0.005,
+      dir:Math.random()>0.5?1:-1
+    });
+  }
+}
+
+function drawMoon(){
+  const mx=W*0.85, my=H*0.12, mr=Math.min(W,H)*0.07;
+  const grd=bgCtx.createRadialGradient(mx,my,0,mx,my,mr*2.5);
+  grd.addColorStop(0,'rgba(240,245,255,0.9)');
+  grd.addColorStop(0.3,'rgba(200,216,240,0.5)');
+  grd.addColorStop(1,'rgba(200,216,240,0)');
+  bgCtx.beginPath();
+  bgCtx.arc(mx,my,mr,0,Math.PI*2);
+  bgCtx.fillStyle='rgba(240,245,255,0.92)';
+  bgCtx.fill();
+  bgCtx.beginPath();
+  bgCtx.arc(mx,my,mr*2.5,0,Math.PI*2);
+  bgCtx.fillStyle=grd;
+  bgCtx.fill();
+}
+
+function animateBg(t){
+  bgCtx.clearRect(0,0,W,H);
+  bgCtx.fillStyle='#04060f';
+  bgCtx.fillRect(0,0,W,H);
+  drawMoon();
+  stars.forEach(s=>{
+    s.alpha+=s.speed*s.dir;
+    if(s.alpha>=1||s.alpha<=0.05)s.dir*=-1;
+    bgCtx.beginPath();
+    bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    bgCtx.fillStyle=`rgba(200,220,255,${s.alpha})`;
+    bgCtx.fill();
+  });
+  shootingStarTimer++;
+  if(shootingStarTimer>480&&!shootingStar){
+    shootingStarTimer=0;
+    shootingStar={x:Math.random()*W*0.5,y:Math.random()*H*0.3,vx:6+Math.random()*4,vy:3+Math.random()*2,trail:[]};
+  }
+  if(shootingStar){
+    shootingStar.trail.push({x:shootingStar.x,y:shootingStar.y});
+    if(shootingStar.trail.length>20)shootingStar.trail.shift();
+    shootingStar.x+=shootingStar.vx;
+    shootingStar.y+=shootingStar.vy;
+    bgCtx.beginPath();
+    shootingStar.trail.forEach((p,i)=>{
+      if(i===0)bgCtx.moveTo(p.x,p.y);else bgCtx.lineTo(p.x,p.y);
+    });
+    bgCtx.strokeStyle='rgba(245,200,66,0.8)';
+    bgCtx.lineWidth=1.5;
+    bgCtx.stroke();
+    bgCtx.beginPath();
+    bgCtx.arc(shootingStar.x,shootingStar.y,2,0,Math.PI*2);
+    bgCtx.fillStyle='rgba(255,255,255,0.9)';
+    bgCtx.fill();
+    if(shootingStar.x>W+50||shootingStar.y>H+50)shootingStar=null;
+  }
+  requestAnimationFrame(animateBg);
+}
+
+window.addEventListener('resize',resize);
+resize();
+animateBg(0);
+
+// ---- SCENE SWITCHING ----
+function goToScene(nextId){
+  const current=document.querySelector('.scene.active');
+  if(current){
+    current.style.opacity='0';
+    setTimeout(()=>{
+      current.classList.remove('active');
+      current.style.display='none';
+      current.style.opacity='1';
+      const next=document.getElementById(nextId);
+      next.style.display='flex';
+      next.classList.add('active');
+      requestAnimationFrame(()=>{
+        next.style.opacity='0';
+        requestAnimationFrame(()=>{
+          next.style.transition='opacity 1.5s ease';
+          next.style.opacity='1';
+          if(nextId==='scene3')startLetter();
+          if(nextId==='scene4'){setTimeout(startCelebration,800);}
+        });
+      });
+    },1000);
+  }
+}
+
+// ---- WISH DATA ----
+const wishes=[
+  {emoji:'🌙',title:'آرامش',text:'امیدوارم امسال شب‌هایی داشته باشی که بدون نگرانی بخوابی.'},
+  {emoji:'✨',title:'تلاش',text:'امیدوارم نتیجه همه جنگیدن‌هات و تلاش‌هات رو بگیری.'},
+  {emoji:'🌸',title:'آدم‌های خوب',text:'امیدوارم کسانی کنارت باشن که خستگیاتو کمتر کنن نه بیشتر.'},
+  {emoji:'🌟',title:'آرزوها',text:'امیدوارم به چیزهایی برسی که هنوز حتی به زبون نیاوردی.'},
+  {emoji:'💛',title:'شادی',text:'امیدوارم بیشتر بخندی، اونقدر که چشمات برق بزنه.'},
+  {emoji:'🎂',title:'تولد',text:'امیدوارم این سال، بهترین سال زندگیت باشه هلیا.'}
+];
+
+let visitedStars=new Set();
+let currentCard=-1;
+
+function openCard(idx){
+  const el=document.getElementById('card'+(idx+1)||`star${idx+1}`);
+  const starEl=document.getElementById('star'+(idx+1));
+  if(starEl)starEl.classList.add('visited');
+  visitedStars.add(idx);
+  // particle burst
+  const rect=starEl.getBoundingClientRect();
+  spawnParticles(rect.left+rect.width/2,rect.top+rect.height/2);
+  document.getElementById('cardEmoji').textContent=wishes[idx].emoji;
+  document.getElementById('cardTitle').textContent=wishes[idx].title;
+  document.getElementById('cardText').textContent=wishes[idx].text;
+  const card=document.getElementById('wishCard');
+  card.classList.add('visible');
+  document.getElementById('overlay').classList.add('active');
+  currentCard=idx;
+  if(visitedStars.size===6){
+    setTimeout(()=>{
+      const btn=document.getElementById('nextBtn2');
+      btn.style.display='block';
+      requestAnimationFrame(()=>{ btn.classList.add('visible'); });
+    },600);
+  }
+}
+
+function closeCard(){
+  document.getElementById('wishCard').classList.remove('visible');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+// Safari fallback: ensure scene1 button is visible after animation
+setTimeout(()=>{
+  const s1btn=document.querySelector('#scene1 .glow-btn');
+  if(s1btn) s1btn.style.opacity='1';
+},5500);
+
+// ---- PARTICLES ----
+const pCanvas=document.getElementById('particleCanvas');
+const pCtx=pCanvas.getContext('2d');
+let particles=[];
+
+function resizePCanvas(){
+  pCanvas.width=window.innerWidth;
+  pCanvas.height=window.innerHeight;
+}
+resizePCanvas();
+window.addEventListener('resize',resizePCanvas);
+
+function spawnParticles(x,y){
+  for(let i=0;i<20;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=Math.random()*4+2;
+    particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,r:Math.random()*3+1,color:Math.random()>0.5?'#f5c842':'#f2a1b3'});
+  }
+}
+
+function animateParticles(){
+  pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  particles=particles.filter(p=>p.life>0);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.1;p.life-=0.03;
+    pCtx.beginPath();
+    pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    pCtx.fillStyle=p.color;
+    pCtx.globalAlpha=p.life;
+    pCtx.fill();
+    pCtx.globalAlpha=1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ---- LETTER TYPEWRITER ----
+const letter=`هلیای عزیزم,\n\nامشب آسمون ۲۰ تا ستاره روشن‌تر از همیشه داره.\nیکیشون مال توئه.\n\nشاید این فقط یه سایت باشه.\nاما پشتش یک عالمه آرزوی خوب برای تو وجود داره.\n\nامیدوارم سال جدید زندگیت\nآروم‌تر، قشنگ‌تر و مهربون‌تر از سال قبل باشه.\n\nکمتر خسته بشی.\nبیشتر بخندی.\n\nتولدت مبارک هلیا 🎂`;
+
+function startLetter(){
+  const el=document.getElementById('letterText');
+  el.innerHTML='<span class="cursor"></span>';
+  let i=0;
+  const chars=[...letter];
+  function typeNext(){
+    if(i>=chars.length){
+      setTimeout(()=>goToScene('scene4'),1200);
+      return;
+    }
+    const c=chars[i];
+    const cursor=el.querySelector('.cursor');
+    if(c==='\n'){
+      cursor.insertAdjacentHTML('beforebegin','<br>');
+      i++;
+      setTimeout(typeNext,150);
+    } else {
+      cursor.insertAdjacentHTML('beforebegin',c==='🎂'?'🎂':escHtml(c));
+      i++;
+      setTimeout(typeNext,40);
+    }
+  }
+  setTimeout(typeNext,600);
+}
+
+function escHtml(c){
+  return c.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ---- CELEBRATION ----
+const fwCanvas=document.getElementById('fireworksCanvas');
+const fwCtx=fwCanvas.getContext('2d');
+let fwParticles=[], lanterns=[], rocketTimer=0, celebRunning=false;
+
+const fwColors=['#f5c842','#f2a1b3','#ffffff','#c8d8f0','#ffaa44'];
+
+function resizeFW(){
+  fwCanvas.width=window.innerWidth;
+  fwCanvas.height=window.innerHeight;
+}
+
+function startCelebration(){
+  resizeFW();
+  window.addEventListener('resize',resizeFW);
+  celebRunning=true;
+  for(let i=0;i<5;i++){
+    lanterns.push({
+      x:Math.random()*window.innerWidth,
+      y:window.innerHeight+Math.random()*200,
+      vy:-(0.4+Math.random()*0.4),
+      sway:Math.random()*Math.PI*2,
+      swaySpeed:0.01+Math.random()*0.01
+    });
+  }
+  animateCelebration();
+  setTimeout(()=>{celebRunning=false;},30000);
+}
+
+function launchRocket(){
+  const x=window.innerWidth*0.2+Math.random()*window.innerWidth*0.6;
+  const targetY=window.innerHeight*0.15+Math.random()*window.innerHeight*0.3;
+  const color=fwColors[Math.floor(Math.random()*fwColors.length)];
+  fwParticles.push({type:'rocket',x,y:window.innerHeight,vx:0,vy:-(window.innerHeight-targetY)/40,targetY,color,life:1,trail:[]});
+}
+
+function explode(x,y,color){
+  for(let i=0;i<100;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=Math.random()*5+1;
+    const c=Math.random()>0.3?color:fwColors[Math.floor(Math.random()*fwColors.length)];
+    fwParticles.push({type:'spark',x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color:c,r:Math.random()*2+0.5,gravity:0.06+Math.random()*0.04});
+  }
+}
+
+function animateCelebration(){
+  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+  rocketTimer++;
+  if(celebRunning&&rocketTimer%(60+(Math.random()*30|0))===0)launchRocket();
+
+  fwParticles=fwParticles.filter(p=>p.life>0.01);
+  fwParticles.forEach(p=>{
+    if(p.type==='rocket'){
+      p.trail.push({x:p.x,y:p.y});
+      if(p.trail.length>8)p.trail.shift();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.y<=p.targetY){
+        explode(p.x,p.y,p.color);
+        p.life=0;return;
+      }
+      fwCtx.beginPath();
+      p.trail.forEach((pt,i)=>{if(i===0)fwCtx.moveTo(pt.x,pt.y);else fwCtx.lineTo(pt.x,pt.y);});
+      fwCtx.strokeStyle=p.color;fwCtx.lineWidth=1.5;fwCtx.globalAlpha=0.6;fwCtx.stroke();
+      fwCtx.globalAlpha=1;
+      fwCtx.beginPath();fwCtx.arc(p.x,p.y,2,0,Math.PI*2);fwCtx.fillStyle='#fff';fwCtx.fill();
+    } else {
+      p.x+=p.vx;p.y+=p.vy;p.vy+=p.gravity;p.life-=0.015;p.vx*=0.98;p.vy*=0.98;
+      fwCtx.beginPath();fwCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      fwCtx.fillStyle=p.color;fwCtx.globalAlpha=p.life;fwCtx.fill();fwCtx.globalAlpha=1;
+    }
+  });
+
+  lanterns.forEach(l=>{
+    l.y+=l.vy;l.sway+=l.swaySpeed;
+    const lx=l.x+Math.sin(l.sway)*15;
+    const grd=fwCtx.createRadialGradient(lx,l.y,0,lx,l.y,22);
+    grd.addColorStop(0,'rgba(255,220,100,0.9)');
+    grd.addColorStop(0.5,'rgba(245,180,50,0.5)');
+    grd.addColorStop(1,'rgba(245,150,20,0)');
+    fwCtx.beginPath();
+    fwCtx.ellipse(lx,l.y,12,18,0,0,Math.PI*2);
+    fwCtx.fillStyle='rgba(255,200,80,0.7)';fwCtx.fill();
+    fwCtx.beginPath();fwCtx.ellipse(lx,l.y,12,18,0,0,Math.PI*2);
+    fwCtx.fillStyle=grd;fwCtx.fill();
+    if(l.y<-50){l.y=window.innerHeight+50;l.x=Math.random()*window.innerWidth;}
+  });
+
+  requestAnimationFrame(animateCelebration);
+}
+</script>
+</body>
+</html>
